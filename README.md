@@ -49,5 +49,5 @@ each area.
 
 ## BetterSign TODO:
 
-- [ ] Create a public repo for BetterSign signing tool.
+- [x] Create a public [repo for BetterSign signing tool](https://github.com/dhuseby/bs).
 - [ ] Upload existing code.
