@@ -148,11 +148,11 @@ TODO:
 
 **1. Repository DID**
 
-The DID for the repository can be deleted by removing the `.did/repo.did` file from the respository and performaing a commit.  The signature of this commit should correspond to one of the maintainers in the `.did/repo.did#authrntication list. 
+The DID for the repository can be deleted by removing the `.did/repo.did` file from the respository and performaing a commit.  The signature of this commit should correspond to one of the maintainers in the `.did/repo.did#authentication list. 
     
 **2. Contributor DID**
 
-Deletion of a personal did will remove the file from `.did/<author key id>.did`.  The `<author did key>.did` is maintained in history which supports provability.  The commit associated with this change should correspond to one of the maintainers in the `.did/repo.did#authrntication list or the private key of the associated DID document itself.
+Deletion of a personal did will remove the file from `.did/<author key id>.did`.  The `<author did key>.did` is maintained in history which supports provability.  The signature over this change should correspond to one of the maintainers in the `.did/repo.did#authentication list or the private key of the associated DID document itself.
     
 TODO:
     - What happens when re-established?  (confirm: new repo.did = new commit hash = new did?)
