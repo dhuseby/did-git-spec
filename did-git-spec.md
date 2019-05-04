@@ -13,7 +13,7 @@ The Git revision control tool is designed to function in a decentralized peer-to
 
 ### Developer Certificate of Origin Compliance
 
-The Linux Foundation requires that all contributions to their open source projects are made by individuals that assert that their contribution adheres to the terms of the [Developer Certificate of Origin](https://developercertificate.org/). The contributor signals their assertion by using either Git's [`--signoff`](https://git-scm.com/docs/git-commit#Documentation/git-commit.txt---signoff) feature, [digit signature](https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work) feature, or both when committing their changes.
+The Linux Foundation requires that all contributions to their open source projects are made by individuals that assert that their contribution adheres to the terms of the [Developer Certificate of Origin](https://developercertificate.org/). The contributor signals their assertion by using either Git's [`--signoff`](https://git-scm.com/docs/git-commit#Documentation/git-commit.txt---signoff) feature, [digital signature](https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work) feature, or both when committing their changes.
 
 
 ### Verifiable Claims Against Open Source Contributions
@@ -154,6 +154,8 @@ Deletion of a personal did will remove the file from ```.did/[personal-hash].did
 # Security Considerations
 
 # Privacy Considerations
+
+Since DIDs can be resolved by anyone, care should be taken to ensure the DID Document does not contain any sensitive personal information.
 
 # Reference Implementations
 
