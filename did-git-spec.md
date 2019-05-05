@@ -160,6 +160,8 @@ TODO:
 
 # Security Considerations
 
+This spec applies only to versions of git >= 2.13.0, which used hardened SHA-1. Versions less than v.2.13.0 are susceptible to a [critical hash collision vulnerability](https://github.com/git/git/blob/master/Documentation/technical/hash-function-transition.txt), and MUST NOT be used for implementing this method.
+
 # Privacy Considerations
 
 Since DIDs can be resolved by anyone, care should be taken to ensure the DID Document does not contain any sensitive personal information.
