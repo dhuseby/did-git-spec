@@ -40,7 +40,7 @@ each area.
 ### Git Porcelain
 
 - [x] Create a [`did-git-impl-porcelain` branch](https://github.com/dhuseby/did-git-impl/tree/did-git-impl-porcelain) off of [git.git `maint` branch](https://github.com/dhuseby/did-git-impl/tree/maint) for creating git-did porcelain.
-- [ ] Define the format of DID signatures in commit records.
+- [ ] Define the format of DID signatures in commit records. Proposal to use [Linked Data Proofs](https://github.com/dhuseby/did-git-spec/issues/9).
 - [ ] Define and document the "meat-space" protocol for doing multiple signatures on a single commit. This is likely to be a threshold signature and the git-did porcelain should automate it as much as possible.
 - [ ] Create a simple `git-did` porcelain command from the Python examples in the git.git repo.
 - [ ] Add initial unit tests for `git-did` porcelain.
