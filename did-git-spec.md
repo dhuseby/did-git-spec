@@ -99,15 +99,15 @@ Example:
 ```
 **2. Contributor DID**
 
-To create a Contributor DID, add public DID document into the .did/ directory and name it using a `<hash of public DID>.did`
+To create a Contributor DID, add public DID document into the .did/ directory and name it using a `<author key id>.did`
 
 An example DID doc is shown below.
 ```jsonld
 {
   "@context": "https://wsid.org/git-method/v1",
-  "id": "did:git:<commit>/<hash of public key>", 
+  "id": "did:git:<commit SHA1>:<author key id>", 
   "publicKey": [{
-    "id": "did:git:<repo>/<hash of public key>",
+    "id": "did:git:<commit SHA1>:<author key id>",
     "type": "<signature type>",
     "publicKeyBase58": "..."
   }
@@ -125,29 +125,36 @@ Example:
   }
 }
 ```
+The commit adding your DID document should be signed by the key associated private key of the public key referenced in the DID document.
 
 ## Read
 
 Notes: since we don't know the repo did string when the repo DID document is created, the repo DID document will not contain the "id" did string for the repo. The `git did read` operation will "resolve" the "id" by looking up the SHA1 hash of the commit that added the DID document to the repo and dynamically add the "id" member to what is rendered to the user.
 
 ## Update 
-- repo.did
-    - updating service_endpoints?
-- [personal-hash].did
-    - is any signature/crypto verification required to update a [personal-hash].did, or, for example, can I change your keys and commit it to the repo to effectively lock you out?  Or is change to .did/[personal-hash].did only allowed where [personal-hash].did matches the signer?
+**1. Repository DID**
+
+There aren't currently any keys associated with the respository, so there will ne no need to update the Public Keys in the DID document.  The process to change the maintainers or the canonical endpoint should be defined in the `.did/governance.md` file.
+
+**2. Contributor DID**
+
+To update a Contributor DID document, remove the previous DID document from the repository and commit.  This commit should be signed by the private key of the DID document being removed.  Then create a new DID document with the appropriate information and commit to the repository.  This commit should be signed by the private key of the DID document being added.
+
+TODO:
+
+1. We need a way to verify that the person making each of these changes has the appropriate keys to prevent unauthorized updates.  Is there a cleaner way to do this?
 
 ## Delete (Revoke)
 
-In the context of a repository, deletion takes two forms.
-    - Deletion of the repository did itself
-    - Deletion of a specific did relative to the reposistory
-    
-### Deletion of individuals
+**1. Repository DID**
 
-Deletion of a personal did will remove the file from ```.did/[personal-hash].did```
-    - the [personal-hash].did is maintained in history which supports provability...
-    - and git porcelain is used to facilitate easy access to the information and the formation of the union of all current and historical personal-dids.
-- Deletion of a repository did is achieved by deleting the .did/repo.did file
+The DID for the repository can be deleted by removing the `.did/repo.did` file from the respository and performaing a commit.  The signature of this commit should correspond to one of the maintainers in the `.did/repo.did#authentication list. 
+    
+**2. Contributor DID**
+
+Deletion of a personal did will remove the file from `.did/<author key id>.did`.  The `<author did key>.did` is maintained in history which supports provability.  The signature over this change should correspond to one of the maintainers in the `.did/repo.did#authentication list or the private key of the associated DID document itself.
+    
+TODO:
     - What happens when re-established?  (confirm: new repo.did = new commit hash = new did?)
     - Is this how we give first-class status to branches/forks - e.g. fork/branch, delete repo.did, re-create new repo.did in each relevant position
 
@@ -162,20 +169,19 @@ Deletion of a personal did will remove the file from ```.did/[personal-hash].did
 - the git did information will be stored in the .did directory, and will function similar to .gitignore
     - by not placing it in the .git directory, means that the information can participate in the git history and shallow clones
 - Layout of .did dir?
-    - .did/repo.did
+    - `.did/repo.did`
         - include hash of governance.md?
-    - .did/[personal-hash].did
-    - .did/governance.md
+    - `.did/<author key id>.did`
+    - `.did/governance.md`
         - Considering moving this to the repo.did as a path
         - These are the contributor terms and conditions
-        - acceptance of the governance model is indicated in each [personal-hash].did by including a signature over the governance.md
+        - acceptance of the governance model is indicated in each `.did/<author key id>.did` by including a signature over the governance.md
 - Schemas (@context)
-    - repo.did
+    - `.did/repo.did`
         - path to governance.md
         - canonical URL
         - list of maintainers
-            - every element is the [personal-hash]
-    - [personal-hash].did
+            - every element is `the <author key id>.did`
         - optional
             - equivId -> [points to external ids]
             - roll -> used to indicate maintainer/contributor status
