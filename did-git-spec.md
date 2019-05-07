@@ -60,11 +60,11 @@ The commit ID portion becomes a globally unique identifier for the Git repositor
 
 The operation of creating a git-did can be done at any point in a git repository.
 
-A DID Document should be created at `.did/repo.did` and all maintainer DID documents added into the .did/ directory. All files are then signed and committed by one of the associated keys in the authentication block into the project.  The SHA1 of the commit is then used to create the git-did for this respository. 
+A DID Document should be created at `did/repo.did` and all maintainer DID documents added into the did/ directory. All files are then signed and committed by one of the associated keys in the authentication block into the project.  The SHA1 of the commit is then used to create the git-did for this respository. 
 
 For example:
 
-To create a git-did, you must create a `.did/repo.did` file that looks like this:
+To create a git-did, you must create a `did/repo.did` file that looks like this:
 ```jsonld
 {
   "@context": "https://wsid.org/git-method/v1",
@@ -99,7 +99,7 @@ Example:
 ```
 **2. Contributor DID**
 
-To create a Contributor DID, add public DID document into the .did/ directory and name it using a `<author key id>.did`
+To create a Contributor DID, add public DID document into the did/ directory and name it using a `<author key id>.did`
 
 An example DID doc is shown below.
 ```jsonld
@@ -134,25 +134,21 @@ Notes: since we don't know the repo did string when the repo DID document is cre
 ## Update 
 **1. Repository DID**
 
-There aren't currently any keys associated with the respository, so there will ne no need to update the Public Keys in the DID document.  The process to change the maintainers or the canonical endpoint should be defined in the `.did/governance.md` file.
+There aren't currently any keys associated with the respository, so there will ne no need to update the Public Keys in the DID document.  The process to change the maintainers or the canonical endpoint should be defined in the `did/governance.md` file.
 
 **2. Contributor DID**
 
-To update a Contributor DID document, remove the previous DID document from the repository and commit.  This commit should be signed by the private key of the DID document being removed.  Then create a new DID document with the appropriate information and commit to the repository.  This commit should be signed by the private key of the DID document being added.
-
-TODO:
-
-1. We need a way to verify that the person making each of these changes has the appropriate keys to prevent unauthorized updates.  Is there a cleaner way to do this?
+To update a Contributor DID document, update the current DID document in the repository and rename the file to reflect the new public key.  Once all changes have been made commit and sign with the private key of the DID document before it was changed.
 
 ## Delete (Revoke)
 
 **1. Repository DID**
 
-The DID for the repository can be deleted by removing the `.did/repo.did` file from the respository and performaing a commit.  The signature of this commit should correspond to one of the maintainers in the `.did/repo.did#authentication list. 
+The DID for the repository can be deleted by removing the `did/repo.did` file from the respository and performaing a commit.  The signature of this commit should correspond to one of the maintainers in the `did/repo.did#authentication list. 
     
 **2. Contributor DID**
 
-Deletion of a personal did will remove the file from `.did/<author key id>.did`.  The `<author did key>.did` is maintained in history which supports provability.  The signature over this change should correspond to one of the maintainers in the `.did/repo.did#authentication list or the private key of the associated DID document itself.
+Deletion of a personal did will remove the file from `did/<author key id>.did`.  The `<author did key>.did` is maintained in history which supports provability.  The signature over this change should correspond to one of the maintainers in the `did/repo.did#authentication list or the private key of the associated DID document itself.
     
 TODO:
     - What happens when re-established?  (confirm: new repo.did = new commit hash = new did?)
@@ -170,19 +166,19 @@ Since DIDs can be resolved by anyone, care should be taken to ensure the DID Doc
 
 # Implementation Notes
 
-- the git did information will be stored in the .did directory, and will function similar to .gitignore
+- the git did information will be stored in the `did` directory, and will function similar to README.md + LICENSE + CONTRIBUTORS boilerplate currently recommended.
     - by not placing it in the .git directory, means that the information can participate in the git history and shallow clones
-- Layout of .did dir?
-    - `.did/repo.did`
-        - include hash of governance.md?
-    - `.did/<author key id>.did`
-    - `.did/governance.md`
+- Layout of `did` directory?
+    - `did/repo.did`
+        - include hash of governance.json?
+    - `did/<author key id>did`
+    - `did/governance.json`
         - Considering moving this to the repo.did as a path
         - These are the contributor terms and conditions
-        - acceptance of the governance model is indicated in each `.did/<author key id>.did` by including a signature over the governance.md
+        - acceptance of the governance model is indicated in each `did/<author key id>.did` by including a signature over the governance.md
 - Schemas (@context)
-    - `.did/repo.did`
-        - path to governance.md
+    - `did/repo.did`
+        - path to governance.json
         - canonical URL
         - list of maintainers
             - every element is `the <author key id>.did`
