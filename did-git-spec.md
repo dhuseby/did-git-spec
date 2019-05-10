@@ -1,7 +1,7 @@
-Note: for everything marked (Optional), 
+Note: for everything marked (Optional),
 
 
-# Abstract 
+# Abstract
 
 Git is a revision control system designed to enable contributors to collaborate in a distributed fashion with no centralized repository. Git supports digitally signing changes with GPG/GPGSM but it is of limited utility because of the lack of widespread adoption of GPG and the infrastructure for key escrowing. This document defines the [DID Method](https://w3c-ccg.github.io/did-spec/#specific-did-method-schemes) for using a Git repository as a source of truth about the repository and its contributors.
 
@@ -19,6 +19,10 @@ The Linux Foundation requires that all contributions to their open source projec
 ### Verifiable Claims Against Open Source Contributions
 
 ### Authorship and Intellectual Property Rights
+
+### Data Interoperability Standards Management
+
+The Overlay Data Capture Architecture aims to be a universal tool for data interoperability.  It provides for composable multi-dimensional schemas which can be dynamically linked to allow for data pooling and frictionless data sharing. In the case of multiple parties wanting to work together to create standard schemas for a particular use case (an industry consortium standardizing product labels, for instance) but who don't necessarily trust one another, this method provides the ability to enforce a governance framework for managing a shared repository while not giving any one entity the keys to the castle.  
 
 # Git DID Method
 
@@ -38,7 +42,7 @@ The `:git` namestring is defined by the following [ABNF](ftp://ftp.rfc-editor.or
 git-did = "did:git:commitid" 1*(":" keyid) 1*(";" did-service) 1*("/" did-path) 1*("?" did-query) 1*("#" did-fragment)
 commitid = 40*(lowerhex)
 keyid = 64*(lowerhex)
-lowerhex = "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7" 
+lowerhex = "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7"
     / "8" / "9" / "a" / "b" / "c" / "d" / "e" / "f"
 ```
 
@@ -54,13 +58,13 @@ The commit ID portion becomes a globally unique identifier for the Git repositor
 
 # CRUD Operations
 
-## Create 
+## Create
 
 **1. Repository DID**
 
 The operation of creating a git-did can be done at any point in a git repository.
 
-A DID Document should be created at `.did/repo.did` and all maintainer DID documents added into the .did/ directory. All files are then signed and committed by one of the associated keys in the authentication block into the project.  The SHA1 of the commit is then used to create the git-did for this respository. 
+A DID Document should be created at `.did/repo.did` and all maintainer DID documents added into the .did/ directory. All files are then signed and committed by one of the associated keys in the authentication block into the project.  The SHA1 of the commit is then used to create the git-did for this respository.
 
 For example:
 
@@ -105,7 +109,7 @@ An example DID doc is shown below.
 ```jsonld
 {
   "@context": "https://wsid.org/git-method/v1",
-  "id": "did:git:<commit SHA1>:<author key id>", 
+  "id": "did:git:<commit SHA1>:<author key id>",
   "publicKey": [{
     "id": "did:git:<commit SHA1>:<author key id>",
     "type": "<signature type>",
@@ -117,7 +121,7 @@ Example:
 ```jsonld
 {
   "@context": "https://wsid.org/git-method/v1",
-  "id": "did:git:abcde12345/hijklmn678919", 
+  "id": "did:git:abcde12345/hijklmn678919",
   "publicKey": [{
     "id": "did:git:abcde12345/hijklmn678919",
     "type": "ED25519SignatureVerification",
@@ -131,7 +135,7 @@ The commit adding your DID document should be signed by the key associated priva
 
 Notes: since we don't know the repo did string when the repo DID document is created, the repo DID document will not contain the "id" did string for the repo. The `git did read` operation will "resolve" the "id" by looking up the SHA1 hash of the commit that added the DID document to the repo and dynamically add the "id" member to what is rendered to the user.
 
-## Update 
+## Update
 **1. Repository DID**
 
 There aren't currently any keys associated with the respository, so there will ne no need to update the Public Keys in the DID document.  The process to change the maintainers or the canonical endpoint should be defined in the `.did/governance.md` file.
@@ -148,12 +152,12 @@ TODO:
 
 **1. Repository DID**
 
-The DID for the repository can be deleted by removing the `.did/repo.did` file from the respository and performaing a commit.  The signature of this commit should correspond to one of the maintainers in the `.did/repo.did#authentication list. 
-    
+The DID for the repository can be deleted by removing the `.did/repo.did` file from the respository and performaing a commit.  The signature of this commit should correspond to one of the maintainers in the `.did/repo.did#authentication list.
+
 **2. Contributor DID**
 
 Deletion of a personal did will remove the file from `.did/<author key id>.did`.  The `<author did key>.did` is maintained in history which supports provability.  The signature over this change should correspond to one of the maintainers in the `.did/repo.did#authentication list or the private key of the associated DID document itself.
-    
+
 TODO:
     - What happens when re-established?  (confirm: new repo.did = new commit hash = new did?)
     - Is this how we give first-class status to branches/forks - e.g. fork/branch, delete repo.did, re-create new repo.did in each relevant position
