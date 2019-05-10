@@ -1,8 +1,8 @@
-Note: for everything marked (Optional), 
+Note: for everything marked (Optional),
 
 # Git DID Method 1.0
 
-# Abstract 
+# Abstract
 
 Git is a revision control system designed to enable contributors to collaborate
 in a distributed fashion with no centralized repository. Git supports digitally
@@ -39,6 +39,10 @@ assertion by using either Git's
 feature, [digital
 signature](https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work) feature,
 or both when committing their changes.
+
+### Data Interoperability Standards Management
+
+The Overlay Data Capture Architecture aims to be a universal tool for data interoperability.  It provides for composable multi-dimensional schemas which can be dynamically linked to allow for data pooling and frictionless data sharing. In the case of multiple parties wanting to work together to create standard schemas for a particular use case (an industry consortium standardizing product labels, for instance) but who don't necessarily trust one another, this method provides the ability to enforce a governance framework for managing a shared repository while not giving any one entity the keys to the castle.  
 
 
 ### Verifiable Claims Against Open Source Contributions
@@ -98,7 +102,7 @@ The `:git` namestring is defined by the following
 git-did = "did:git:commitid" 1*(":" keyid) 1*(";" did-service) 1*("/" did-path) 1*("?" did-query) 1*("#" did-fragment)
 commitid = 40*(lowerhex)
 keyid = 64*(lowerhex)
-lowerhex = "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7" 
+lowerhex = "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7"
     / "8" / "9" / "a" / "b" / "c" / "d" / "e" / "f"
 ```
 
@@ -119,7 +123,7 @@ repository and is immutable for the life of the Git repository. The
 
 # CRUD Operations
 
-## Create 
+## Create
 
 **1. Repository DID**
 
@@ -175,7 +179,7 @@ An example DID doc is shown below.
 ```jsonld
 {
   "@context": "https://wsid.org/git-method/v1",
-  "id": "did:git:<commit SHA1>:<author key id>", 
+  "id": "did:git:<commit SHA1>:<author key id>",
   "publicKey": [{
     "id": "did:git:<commit SHA1>:<author key id>",
     "type": "<signature type>",
@@ -187,7 +191,7 @@ Example:
 ```jsonld
 {
   "@context": "https://wsid.org/git-method/v1",
-  "id": "did:git:abcde12345/hijklmn678919", 
+  "id": "did:git:abcde12345/hijklmn678919",
   "publicKey": [{
     "id": "did:git:abcde12345/hijklmn678919",
     "type": "ED25519SignatureVerification",
@@ -206,7 +210,7 @@ repo. The `git did read` operation will "resolve" the "id" by looking up the
 SHA1 hash of the commit that added the DID document to the repo and dynamically
 add the "id" member to what is rendered to the user.
 
-## Update 
+## Update
 **1. Repository DID**
 
 There aren't currently any keys associated with the respository, so there will
@@ -225,6 +229,7 @@ it was changed.
 
 **1. Repository DID**
 
+<<<<<<< HEAD
 The DID for the repository can be deleted by removing the `did/repo.did` file
 from the respository and performaing a commit.  The signature of this commit
 should correspond to one of the maintainers in the `did/repo.did#authentication
@@ -237,7 +242,6 @@ The `<author did key>.did` is maintained in history which supports provability.
 The signature over this change should correspond to one of the maintainers in
 the `did/repo.did#authentication list or the private key of the associated DID
 document itself.
-    
 TODO:
 - [ ] What happens when re-established?  (confirm: new repo.did = new commit hash = new did?)
 - [ ] Is this how we give first-class status to branches/forks - e.g. fork/branch, delete repo.did, re-create new repo.did in each relevant position
