@@ -49,6 +49,7 @@ The Overlay Data Capture Architecture aims to be a universal tool for data inter
 
 ### Authorship and Intellectual Property Rights
 
+<<<<<<< HEAD
 ## Terminology
 
 - **Commit ID**
@@ -78,6 +79,7 @@ file.
 	
 TODO: 
 - [ ] Is this hash = Base64(SHA256(PublicKey from DID Document))?
+
 
 
 # Git DID Method
