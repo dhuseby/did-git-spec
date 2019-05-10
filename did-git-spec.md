@@ -81,6 +81,10 @@ TODO:
 - [ ] Is this hash = Base64(SHA256(PublicKey from DID Document))?
 
 
+<<<<<<< HEAD
+=======
+The Overlay Data Capture Architecture aims to be a universal tool for data interoperability.  It provides for multi-dimensional schemas which can be dynamically linked to allow for efficient data pooling. In case multiple parties want to work together to create standard schemas for a particular use case (an industry consortium standardizing product labels, for instance) but don't necessarily trust one another, this method provides the ability to enforce a governance framework for managing a shared repository while not giving any one entity the keys to the castle.  
+>>>>>>> clean up language
 
 # Git DID Method
 
