@@ -21,6 +21,26 @@ The Linux Foundation requires that all contributions to their open source projec
 
 ### Authorship and Intellectual Property Rights
 
+# Terminology
+
+<dl class="terminology">
+<dt>Commit ID</dt>
+<dd>A Git commit ID is a checksum (SHA1 hash) of every important aspect of a commit including:
+<ol>
+<li>The contents of the commit</li>
+<li>Commit date</li>
+<li>Committer's name and email address</li>
+<li>Log message</li>
+<li>The ID of the previous commit(s)</li>
+</ol>
+[A more detailed description](https://git-scm.com/book/en/v1/Getting-Started-Git-Basics#Git-Has-Integrity)
+</dd>
+<dt>Repo ID</dt>
+<dd>The Repo ID is the Commit ID of the commit adding this file into the repository and can be found in the `did/repo.did` file.</dd>
+<dt>Contributor ID</dt>
+<dd>The Contributor ID is a hash[???(Base64(SHA256(PublicKey from DID Document))???)] of the Contributor's Public Key from the DID document that they control and can be found in the `did/<Contributor ID>.did` file.</dd>
+</dl>
+
 # Git DID Method
 
 The namestring that shall identify this DID method is `:git`.
