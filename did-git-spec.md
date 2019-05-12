@@ -1,6 +1,6 @@
 Note: for everything marked (Optional), 
 
-<h1 style="font-weight:bold">Git DID Method 1.0</h1>
+# Git DID Method 1.0
 
 # Abstract 
 
