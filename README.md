@@ -50,4 +50,6 @@ each area.
 ## BetterSign TODO:
 
 - [x] Create a public [repo for BetterSign signing tool](https://github.com/dhuseby/bs).
-- [ ] Upload existing code.
+- [ ] Upload existing bs code.
+- [x] Create a public [repo for the DIDDir library](https://github.com/dhuseby/diddir).
+- [x] Upload existing diddir code.
