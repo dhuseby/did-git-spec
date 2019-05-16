@@ -1,5 +1,6 @@
 Note: for everything marked (Optional), 
 
+# Git DID Method 1.0
 
 # Abstract 
 
@@ -19,6 +20,31 @@ The Linux Foundation requires that all contributions to their open source projec
 ### Verifiable Claims Against Open Source Contributions
 
 ### Authorship and Intellectual Property Rights
+
+## Terminology
+
+- **Commit ID**
+	
+	A Git commit ID is a checksum (SHA1 hash) of every important aspect of a commit including
+
+	1. The contents of the commit
+	2. Commit date
+	3. Committer's name and email address
+	4. Log message
+	5. The ID of the previous commit(s)
+
+	[A more detailed description](https://git-scm.com/book/en/v1/Getting-Started-Git-Basics#Git-Has-Integrity)
+
+- **Repo ID**
+
+	The Repo ID is the Commit ID of the commit adding this file into the repository and can be found in the `did/repo.did` file.
+
+- **Contributor ID**
+
+	The Contributor ID is a hash of the Contributor's Public Key from the DID document that they control and can be found in the `did/<Contributor ID>.did` file.
+	
+	TODO: Is this hash = Base64(SHA256(PublicKey from DID Document))?
+
 
 # Git DID Method
 
