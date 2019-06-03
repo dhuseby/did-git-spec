@@ -49,11 +49,10 @@ The Overlay Data Capture Architecture aims to be a universal tool for data inter
 
 ### Authorship and Intellectual Property Rights
 
-<<<<<<< HEAD
 ## Terminology
 
 - **Commit ID**
-	
+
 A Git commit ID is a checksum (SHA1 hash) of every important aspect of a commit
 including
 
@@ -76,15 +75,15 @@ and can be found in the `did/repo.did` file.
 The Contributor ID is a hash of the Contributor's Public Key from the DID
 document that they control and can be found in the `did/<Contributor ID>.did`
 file.
-	
-TODO: 
+
+TODO:
 - [ ] Is this hash = Base64(SHA256(PublicKey from DID Document))?
 
 
-<<<<<<< HEAD
-=======
+
+### Shared Overlay Repositories
+
 The Overlay Data Capture Architecture aims to be a universal tool for data interoperability.  It provides for multi-dimensional schemas which can be dynamically linked to allow for efficient data pooling. In case multiple parties want to work together to create standard schemas for a particular use case (an industry consortium standardizing product labels, for instance) but don't necessarily trust one another, this method provides the ability to enforce a governance framework for managing a shared repository while not giving any one entity the keys to the castle.  
->>>>>>> clean up language
 
 # Git DID Method
 
@@ -139,7 +138,7 @@ A DID Document should be created at `did/repo.did` and all maintainer DID
 documents added into the did/ directory. All files are then signed and
 committed by one of the associated keys in the authentication block into the
 project.  The SHA1 of the commit is then used to create the git-did for this
-respository. 
+respository.
 
 For example:
 
@@ -235,12 +234,11 @@ it was changed.
 
 **1. Repository DID**
 
-<<<<<<< HEAD
 The DID for the repository can be deleted by removing the `did/repo.did` file
 from the respository and performaing a commit.  The signature of this commit
 should correspond to one of the maintainers in the `did/repo.did#authentication
-list. 
-    
+list.
+
 **2. Contributor DID**
 
 Deletion of a personal did will remove the file from `did/<author key id>.did`.
