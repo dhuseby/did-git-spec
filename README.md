@@ -15,9 +15,9 @@ each area.
 - [x] Add version to `did-git-spec.md` see [method registry requirement 2](https://w3c-ccg.github.io/did-method-registry/#the-registration-process).
 - [x] Request that the spec be include in the [DID method registry](https://w3c-ccg.github.io/did-method-registry/).
 - [x] Add terminology section to the spec to define repo ID, committer ID, etc.
-- [ ] Complete the sections on motivation.
+- [x] Complete the sections on motivation.
 - [ ] Finish the CRUD operations for both repo and committer DID strings.
-- [ ] Reconcile difference between `did-dir-spec.md` and `did-git-spec.md` to create standard for on-disk DID documents as keyring.
+- [x] Reconcile difference between `did-dir-spec.md` and `did-git-spec.md` to create standard for on-disk DID documents as keyring.
 
 ## Impl TODO:
 
@@ -26,7 +26,7 @@ each area.
 ### Git Signing
 - [x] Create a [`did-git-impl-signing` branch](https://github.com/dhuseby/did-git-impl/tree/did-git-impl-signing) off of [git.git `maint` branch](https://github.com/dhuseby/did-git-impl/tree/maint) for signing infrastructure changes.
 - [ ] Rebase patches for signing infrastructure changes.
-  - [ ] Rebase documentation changes.
+  - [x] Rebase documentation changes.
 	- [ ] Rebase signing interface abstraction.
 	- [ ] Rebase GPG and GPGSM "drivers".
 	- [ ] Verify that all existing GPG unit tests pass.
@@ -41,11 +41,11 @@ each area.
 
 - [x] Create a [`did-git-impl-porcelain` branch](https://github.com/dhuseby/did-git-impl/tree/did-git-impl-porcelain) off of [git.git `maint` branch](https://github.com/dhuseby/did-git-impl/tree/maint) for creating git-did porcelain.
 - [ ] Define the format of DID signatures in commit records. Proposal to use [Linked Data Proofs](https://github.com/dhuseby/did-git-spec/issues/9).
-- [ ] Define and document the "meat-space" protocol for doing multiple signatures on a single commit. This is likely to be a threshold signature and the git-did porcelain should automate it as much as possible.
 - [ ] Create a simple `git-did` porcelain command from the Python examples in the git.git repo.
 - [ ] Add initial unit tests for `git-did` porcelain.
 - [ ] Implement CRUD operations for repo DID strings.
 - [ ] Implement CRUD operations for committer DID strings.
+- [ ] Define and document the "meat-space" protocol for doing multiple signatures on a single commit. This is likely to be a threshold signature and the git-did porcelain should automate it as much as possible.
 
 ## BetterSign TODO:
 
@@ -53,3 +53,13 @@ each area.
 - [x] Upload existing bs code.
 - [x] Create a public [repo for the DIDDir library](https://github.com/dhuseby/diddir).
 - [x] Upload existing diddir code.
+- [ ] BetterSign
+  - [ ] Refactor sign/verify functions to use [background-jobs](https://crates.io/crates/background-jobs)
+	- [ ] Add DID string parser.
+	- [ ] Add linked data structure (LDS) output format.
+	- [ ] Add JSON web signature (JWS) output format.
+- [ ] DIDdir
+  - [ ] Add JSON-LD parser for DID documents.
+	- [ ] Add Base58 crate for naming DID documents.
+	- [ ] Add code to find DIDdir in local dir and ancestors.
+	- [ ] Add git2 crate to handle Git commands for CRUD operations on DID docs.
