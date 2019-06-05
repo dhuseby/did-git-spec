@@ -233,11 +233,19 @@ is the repo ID.
 
 ### Contributor ID
 
-A contributor ID is the [Base58](https://en.wikipedia.org/wiki/Base58)-encoded
-digest of the contributor's public key stored in their DID document in the
-repo. The [DID spec section on public
-keys](https://w3c-ccg.github.io/did-spec/#public-keys) specifies
-"publicKeyBase58" as a valid format and encoding for public keys in DID docs.
+A contributor ID is the commit ID of the commit that added the contributors'
+DID document to the repo. This is so that the contributor ID is not only tied
+to a point in the repo history but it also remains stable over time. Once an
+identity is established in a repo it will be valid as long as the repo remains.
+
+Aliases in the DIDdir can be used to facilitate quickly looking up a DID
+document by key ID.
+
+### Key ID
+
+A key ID is the [Base58](https://en.wikipedia.org/wiki/Base58)-encoded,
+[SHA-256](https://en.wikipedia.org/wiki/SHA-2) digest of the contributor's
+public key stored in their DID document in the repo.
 
 ## Git DID Method
 
@@ -256,19 +264,13 @@ The `did:git` namestring is defined by the following
 [ABNF](ftp://ftp.rfc-editor.org/in-notes/std/std68.txt):
 
 ```abnf
-git-did = "did:git:repo-id" 1*(":" commit-id / key-id) 1*(";" did-service) 
+git-did = "did:git:repo-id" 1*(":" contributor-id) 1*(";" did-service) 
           1*("/" did-path) 1*("?" did-query) 1*("#" did-fragment)
 repo-id = commit-id
+contributor-id = commit-id
 commit-id = 40*(lowerhex)
-key-id = 44*(base58)
 lowerhex = "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" / "a" /
            "b" / "c" / "d" / "e" / "f"
-base58 = "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" / "A" / "B" /
-         "C" / "D" / "E" / "F" / "G" / "H" / "J" / "K" / "L" / "M" / "N" /
-         "P" / "Q" / "R" / "S" / "T" / "U" / "V" / "W" / "X" / "Y" / "Z" /
-         "a" / "b" / "c" / "d" / "e" / "f" / "g" / "h" / "i" / "j" / "k" /
-         "m" / "n" / "o" / "p" / "q" / "r" / "s" / "t" / "u" / "v" / "w" /
-         "x" / "y" / "z"
 ```
 
 In the context of this method spec, there are three valid DID formats:
@@ -280,6 +282,10 @@ In the context of this method spec, there are three valid DID formats:
 [DID parameter names](https://w3c-ccg.github.io/did-spec/#generic-did-parameter-names)
 are used on the end of a DID for an identity to select specific subjects within
 the contributor's DID document.
+
+**Note:** The third DID that references a commit is intented to be limted to
+just the read DID method. However, also supporting the update method may be
+useful when implementing a decentralized multi-signature protocol for commits.
 
 ### (Optional) JSON-LD Context Definition
 
@@ -314,13 +320,12 @@ $ git did create --repo=/foo/bar/baz
 #### Repository DID
 
 The operation of establishing the DID regime over a repo can happen at any time
-in the history of the repo.
-
-A DID Document should be created at `did/repo.did` and all maintainer DID
-documents added into the did/ directory. All files are then signed and
-committed by one of the associated keys in the authentication block into the
-project.  The SHA-1 of the commit is then used to create the git-did for this
-respository. 
+in the history of the repo. To do so, a number of DID document templates need
+to be added to the repo. The DID Document template for the repo is named
+`did/repo.did`. All of the maintainer DID document templates must be added into
+the did/ directory as well. All files are then signed and committed by one of
+the associated keys in the authentication block into the project. The SHA-1 of
+the commit is then used to create the git-did for this respository. 
 
 For example:
 
@@ -328,30 +333,36 @@ To create a git-did, you must create a `did/repo.did` file that looks like this:
 ```jsonld
 {
   "@context": "https://wsid.org/git-method/v1",
-  "id": "did:git:<placeholder>", //should this be in the document?
+  "id": "did:git:$repo-id",
   "service": [{
     "type": <gitService>,
     "serviceEndpoint": <Canonical URI for the respository>
     }],
   "authentication": [
-      // original maintainers/controllers of this repository should be listed here to comply with governance.  Origin commit should be signed by one of these keys.  
-    "<hash-of-pub-key>#controller-1",
-    "<hash-of-pub-key>#controller-2",
-    "<hash-of-pub-key>#controller-n",
+      // Original maintainers/controllers of this repository should be listed
+      // here to comply with governance. Thecommit should be signed by one of
+      // these keys.  
+    "<key-id of controller 1>",
+    "<key-id of controller-2>",
+    "<key-id of controller-n>",
 }
 ```
 
-Example:
+When executing a read operation on the repo DID, the repo.did document will
+have the `$repo-id` string dynamically replaced with the commit ID of the
+commit in which the repo.did file was added to the repo. For example, the
+result of a read on the repo DID would look something like this:
+
 ```jsonld
 {
   "@context": "https://wsid.org/git-method/v1",
-  "id": "did:git:000000000000",
+  "id": "did:git:625557b5a9cdf399205820a2a716da897e2f9657",
   "service": [{
-    "type": <gitService>,
+    "type": "git",
     "serviceEndpoint": "https://github.com/example/example.git"
     }],
   "authentication": [
-    "123456789abcdefghi#controller-1",
+    "123456789abcdefghj#controller-1",
     "123456789abcdefghj#controller-2",
     "123456789abcdefghk#controller-n"
     ]
@@ -360,17 +371,17 @@ Example:
 #### Contributor DID
 
 To create a Contributor DID, add public DID document into the did/ directory
-and name it using a `<author key id>.did`
+and name it using a `<author>.did`. The name of the file is arbitrary and
 
-An example DID doc is shown below.
+An example contributor DID template is shown below.
 ```jsonld
 {
   "@context": "https://wsid.org/git-method/v1",
-  "id": "did:git:<commit SHA-1>:<author key id>", 
+  "id": "did:git:625557b5a9cdf399205820a2a716da897e2f9657:$contributor-id", 
   "publicKey": [{
-    "id": "did:git:<commit SHA-1>:<author key id>",
-    "type": "<signature type>",
-    "publicKeyBase58": "..."
+    "id": "did:git:625557b5a9cdf399205820a2a716da897e2f9657:$contributor-id#1",
+    "type": "Ed25519VerificationKey2018",
+    "publicKeyBase58": "DpS9NGz4dXmQZ27VeLzsC5DpJzUBMztQCon6JBAQAu7q"
   }
 }
 ```
