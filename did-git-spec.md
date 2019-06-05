@@ -273,19 +273,14 @@ lowerhex = "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" / "a" /
            "b" / "c" / "d" / "e" / "f"
 ```
 
-In the context of this method spec, there are three valid DID formats:
+In the context of this method spec, there are two valid DID formats:
 
 1. The DID for just the repo: `did:git:<Repo ID>`.
 2. The DID for a contributor identity in the repo: `did:git:<Repo ID>:<Contributor ID>`.
-3. The DID for a commit in the repo: `did:git:<Repo ID>:<Commit ID>`.
 
 [DID parameter names](https://w3c-ccg.github.io/did-spec/#generic-did-parameter-names)
 are used on the end of a DID for an identity to select specific subjects within
 the contributor's DID document.
-
-**Note:** The third DID that references a commit is intented to be limted to
-just the read DID method. However, also supporting the update method may be
-useful when implementing a decentralized multi-signature protocol for commits.
 
 ### (Optional) JSON-LD Context Definition
 
