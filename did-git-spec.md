@@ -339,7 +339,8 @@ To create a git-did, you must create a `did/repo.did` file that looks like this:
       // these keys.  
     "<key-id of controller 1>",
     "<key-id of controller-2>",
-    "<key-id of controller-n>",
+    "<key-id of controller-n>"
+  ]
 }
 ```
 
@@ -392,8 +393,8 @@ Example:
   }
 }
 ```
-The commit adding your DID document should be signed by the key associated
-private key of the public key referenced in the DID document.
+The commit adding your DID document should be signed by the private key
+associated with the public key referenced in the DID document.
 
 ### Read
 
@@ -408,7 +409,7 @@ add the "id" member to what is rendered to the user.
 #### Repository DID
 
 There aren't currently any keys associated with the respository, so there will
-ne no need to update the Public Keys in the DID document.  The process to
+be no need to update the Public Keys in the DID document.  The process to
 change the maintainers or the canonical endpoint should be defined in the
 `did/governance.md` file.
 
@@ -416,7 +417,7 @@ change the maintainers or the canonical endpoint should be defined in the
 
 To update a Contributor DID document, update the current DID document in the
 repository and rename the file to reflect the new public key.  Once all changes
-have been made commit and sign with the private key of the DID document before
+have been made, commit and sign with the private key of the DID document before
 it was changed.
 
 ### Delete (Revoke)
@@ -527,7 +528,7 @@ DIDdir requires that the root folder and all child folders be readable,
 writable, and executable by only the owner. All files must only be readable and
 writable by the owner. On Linux that means the folders are 700 and files are
 600. All implementations must check both folder and file permissions and raise
-and error/exception if any of the files are not correct.
+an error/exception if any of the files are not correct.
 
 #### Default User DIDdir
 
