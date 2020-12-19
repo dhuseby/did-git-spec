@@ -339,7 +339,8 @@ To create a git-did, you must create a `did/repo.did` file that looks like this:
       // these keys.  
     "<key-id of controller 1>",
     "<key-id of controller-2>",
-    "<key-id of controller-n>",
+    "<key-id of controller-n>"
+  ]
 }
 ```
 
