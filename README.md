@@ -1,3 +1,6 @@
+# NOTE: THIS SPEC HAS BEEN WITHDRAWN FROM THE W3C DID METHOD REGISTRY
+The future of developer provenance in Git repos is being implemented using [authentic data provenance logs](https://github.com/TrustFrame/authentic-data-specifications/blob/main/Authentic%20Data%20Provenance%20Log.md) instead of DID documents. DID documents do not support history and DID methods conflate identification with location and it has resulted in siloing and politics; [don't use DIDs](https://github.com/TrustFrame/authentic-data-specifications/blob/main/Authentic%20Data%20Provenance%20Log.md). The signing tools used for this will all communicate with Git using [a new protocol under development](https://github.com/TrustFrame/git-cryptography-protocol/blob/main/Git%20Cryptography%20Protocol.md).
+
 # W3C DID Method Spec for `did:git:`
 
 This repo is the central coordination point for work on the
